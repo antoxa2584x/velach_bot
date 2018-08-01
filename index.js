@@ -1,13 +1,5 @@
-const pg = require('pg');
-const TelegramBot = require('node-telegram-bot-api');
+const Application = require('./application/Application');
 
-const config = require('./config');
-const Bot = require('./bot');
-const Db = require('./db');
+const app = new Application();
 
-const pool = new pg.Pool(config.get('database:postgres'));
-const telegramBot = new TelegramBot(config.get('telegram:token'), { polling: false });
-
-const bot = new Bot(pool, telegramBot);
-
-bot.start();
+app.start();

@@ -3,26 +3,20 @@
   "version": "0.0.1",
   "description": "Small bot for /bi chat.",
   "main": "index.js",
-  "scripts": {
-    "lint": "eslint ."
-  },
-  "author": "",
+  "author": "bnopne",
   "license": "GPL-3.0",
   "dependencies": {
-    "camelcase": "^4.1.0",
-    "nconf": "^0.8.4",
-    "node-telegram-bot-api": "^0.27.1",
-    "path": "^0.12.7",
-    "pg": "^6.4.1",
-    "winston": "^2.3.1"
+    "convict": "^4.3.2",
+    "node-telegram-bot-api": "^0.30.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.38.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "chai": "^4.1.0",
-    "eslint": "^4.17.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "mocha": "^3.4.2"
+    "eslint": "^5.2.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "minimist": "^1.2.0",
+    "sequelize-cli": "^4.0.0"
   }
 }
