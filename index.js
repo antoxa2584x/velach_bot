@@ -1,5 +1,5 @@
-const Application = require('./application/Application');
+const VelachBotApplication = require('./application/VelachBotApplication');
 
-const app = new Application();
+const app = new VelachBotApplication();
 
 app.start();

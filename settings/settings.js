@@ -22,6 +22,14 @@ const settings = convict({
       env: 'DB_DIALECT',
     },
   },
+  telegram: {
+    token: {
+      doc: 'Telegram bot token',
+      format: String,
+      default: '',
+      env: 'TELEGRAM_TOKEN',
+    },
+  },
 });
 
 settings.validate();
