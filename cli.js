@@ -2,13 +2,11 @@ const { exec } = require('child_process');
 
 const minimist = require('minimist');
 
-const Models = require('./models');
+const models = require('./models');
 
 
 async function execute(argv) {
   if (argv._.includes('create-schema')) {
-    const models = new Models();
-
     try {
       await models.createSchema();
     } catch (err) {
