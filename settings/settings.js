@@ -26,7 +26,7 @@ const settings = convict({
     token: {
       doc: 'Telegram bot token',
       format: String,
-      default: '',
+      default: '342387136:AAGiuMdiRjsswdkj75-sF14bvF34ZdTmw1k',
       env: 'TELEGRAM_TOKEN',
     },
   },

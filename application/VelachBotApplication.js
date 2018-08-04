@@ -1,11 +1,13 @@
 const Application = require('./Application');
-const LogMiddleware = require('../middlewares/LogMiddleware');
+const DTOMiddleware = require('../middlewares/DTOMiddleware');
+const UserChatMiddleware = require('../middlewares/UserChatMiddleware');
 
 
 class VelachBotApplication extends Application {
   static get middlewares() {
     return [
-      LogMiddleware,
+      DTOMiddleware,
+      UserChatMiddleware,
     ];
   }
 }

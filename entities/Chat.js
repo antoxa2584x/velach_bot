@@ -8,14 +8,37 @@ class Chat extends Entity {
     return models.Chat;
   }
 
-  static create(id, type, title) {
-    const model = Chat.modelClass.build({
+  static async create(id, type, title) {
+    const model = await this.modelClass.create({
       id,
       type,
       title,
     });
 
-    return new Chat(model);
+    return new this(model);
+  }
+
+  static async createOrUpdate(id, type, title) {
+    const [model] = await Chat.modelClass.upsert(
+      {
+        id,
+        type,
+        title,
+      },
+      {
+        returning: true,
+      },
+    );
+
+    return new this(model);
+  }
+
+  static createOrUpdateFromTelegramChatDTO(dto) {
+    return Chat.createOrUpdate(
+      dto.id,
+      dto.type,
+      dto.title,
+    );
   }
 
   get id() {
@@ -23,8 +46,9 @@ class Chat extends Entity {
   }
 
   addUser(user) {
-    const userChatMtm = UserChatMtm.create(user.id, this.id);
-    return userChatMtm.save();
+    console.log(user.id);
+    console.log(this.id);
+    return UserChatMtm.create(user.id, this.id);
   }
 }
 

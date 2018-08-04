@@ -7,13 +7,27 @@ class UserChatMtm extends Entity {
     return models.UserChatMtm;
   }
 
-  static create(userId, chatId) {
-    const model = UserChatMtm.modelClass.build({
+  static async create(userId, chatId) {
+    const model = await UserChatMtm.modelClass.create({
       userId,
       chatId,
     });
 
-    return new UserChatMtm(model);
+    return new this(model);
+  }
+
+  static async createOrUpdate(userId, chatId) {
+    const [model] = await this.modelClass.upsert(
+      {
+        userId,
+        chatId,
+      },
+      {
+        returning: true,
+      },
+    );
+
+    return new this(model);
   }
 }
 

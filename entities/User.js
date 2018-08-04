@@ -7,8 +7,8 @@ class User extends Entity {
     return models.User;
   }
 
-  static create(id, isBot, firstName, lastName, username) {
-    const model = this.modelClass.build({
+  static async create(id, isBot, firstName, lastName, username) {
+    const model = await this.modelClass.create({
       id,
       isBot,
       firstName,
@@ -16,7 +16,38 @@ class User extends Entity {
       username,
     });
 
-    return new User(model);
+    return new this(model);
+  }
+
+  static async createOrUpdate(id, isBot, firstName, lastName, username) {
+    const [model] = await this.modelClass.upsert(
+      {
+        id,
+        isBot,
+        firstName,
+        lastName,
+        username,
+      },
+      {
+        returning: true,
+      },
+    );
+
+    return new this(model);
+  }
+
+  static createOrUpdateFromTelegramUserDTO(dto) {
+    return User.createOrUpdate(
+      dto.id,
+      dto.isBot,
+      dto.firstName,
+      dto.lastName,
+      dto.username,
+    );
+  }
+
+  get id() {
+    return this.model.id;
   }
 }
 

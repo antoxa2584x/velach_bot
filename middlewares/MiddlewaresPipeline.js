@@ -11,6 +11,10 @@ class MiddlewaresPipeline {
     for (let i = 0; i < this.middlewares.length; i += 1) {
       try {
         processedMessage = await this.middlewares[i].processMessage(processedMessage);
+
+        if (!processedMessage) {
+          break;
+        }
       } catch (err) {
         console.error(err);
         break;
