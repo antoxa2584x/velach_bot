@@ -11,6 +11,7 @@ class Bikecheck extends Entity {
     const model = models.Bikecheck.create({
       userId,
       telegramImageId,
+      isActive: true,
     });
 
     return new Bikecheck(model);

@@ -46,9 +46,7 @@ class Chat extends Entity {
   }
 
   addUser(user) {
-    console.log(user.id);
-    console.log(this.id);
-    return UserChatMtm.create(user.id, this.id);
+    return UserChatMtm.createOrUpdate(user.id, this.id);
   }
 }
 

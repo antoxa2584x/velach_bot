@@ -18,7 +18,9 @@ class Application {
     );
   }
 
-  start() {
+  async start() {
+    this.bot.info = await this.bot.getMe();
+
     this.bot.on(
       'message',
       getBoundMethod(this.processMessage, this),

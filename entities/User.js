@@ -49,6 +49,13 @@ class User extends Entity {
   get id() {
     return this.model.id;
   }
+
+  getActiveBikecheck() {
+    return models.Bikecheck.findOne({
+      userId: this.model.id,
+      isActive: true,
+    });
+  }
 }
 
 
