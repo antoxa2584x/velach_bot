@@ -1,8 +1,8 @@
 const TelegramBot = require('node-telegram-bot-api');
 
-const MiddlewaresPipelineFactory = require('../middlewares/MiddlewaresPipelineFactory');
 const settings = require('../settings');
-const getBoundMethod = require('../utils/get_bound_method');
+const TelegramMessageDTO = require('../dto/TelegramMessageDTO');
+const { NotImplementedError, MessageHandlingError } = require('../errors');
 
 
 class Application {
@@ -12,10 +12,6 @@ class Application {
 
   constructor() {
     this.bot = new TelegramBot(settings.get('telegram.token'));
-    this.middlewaresPipelineFactory = new MiddlewaresPipelineFactory(
-      this.constructor.middlewares,
-      this.bot,
-    );
   }
 
   async start() {
@@ -23,14 +19,24 @@ class Application {
 
     this.bot.on(
       'message',
-      getBoundMethod(this.processMessage, this),
+      this.onMessage.bind(this),
     );
+
     this.bot.startPolling();
   }
 
-  async processMessage(message) {
-    const pipeline = this.middlewaresPipelineFactory.getInstance();
-    await pipeline.processMessage(message);
+  async onMessage(rawMessage) {
+    const telegramMessageData = new TelegramMessageDTO(rawMessage)
+
+    try {
+      await this.handleMessage(telegramMessageData);
+    } catch (error) {
+      throw new MessageHandlingError();
+    }
+  }
+
+  async handleMessage() { // eslint-disable-line
+    throw new NotImplementedError();
   }
 }
 

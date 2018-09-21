@@ -11,6 +11,12 @@ class DoesntExistError extends Error {
   }
 }
 
+class MessageHandlingError extends Error {
+  constructor() {
+    super('Error handling message');
+  }
+}
 
 exports.NotImplementedError = NotImplementedError;
 exports.DoesntExistError = DoesntExistError;
+exports.MessageHandlingError = MessageHandlingError;
