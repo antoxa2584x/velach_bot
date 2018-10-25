@@ -1,4 +1,4 @@
-const DTO = require('./DTO');
+const DTO = require('../infrastructure/DTO');
 
 
 class TelegramPhotoDTO extends DTO {

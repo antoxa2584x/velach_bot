@@ -1,4 +1,4 @@
-const DTO = require('./DTO');
+const DTO = require('../infrastructure/DTO');
 const TelegramUserDTO = require('./TelegramUserDTO');
 const TelegramChatDTO = require('./TelegramChatDTO');
 const TelegramMessageEntityDTO = require('./TelegramMessageEntityDTO');

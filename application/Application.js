@@ -2,16 +2,14 @@ const TelegramBot = require('node-telegram-bot-api');
 
 const settings = require('../settings');
 const TelegramMessageDTO = require('../dto/TelegramMessageDTO');
-const { NotImplementedError, MessageHandlingError } = require('../errors');
+const { MessageHandlingError } = require('../infrastructure/errors');
+const Router = require('../infrastructure/Router');
 
 
 class Application {
-  static get middlewares() {
-    return [];
-  }
-
   constructor() {
     this.bot = new TelegramBot(settings.get('telegram.token'));
+    this.router = new Router();
   }
 
   async start() {
@@ -26,17 +24,19 @@ class Application {
   }
 
   async onMessage(rawMessage) {
-    const telegramMessageData = new TelegramMessageDTO(rawMessage)
+    const messageData = new TelegramMessageDTO(rawMessage);
 
     try {
-      await this.handleMessage(telegramMessageData);
+      await this.handleMessage(messageData);
     } catch (error) {
       throw new MessageHandlingError();
     }
   }
 
-  async handleMessage() { // eslint-disable-line
-    throw new NotImplementedError();
+  handleMessage(messageData) {
+    const routes = this.router.getMatchingRoutes(messageData);
+    const handlers = routes.map(route => route.getHandlerInstance(messageData, this.bot));
+    return Promise.all(handlers.map(handler => handler.handle()));
   }
 }
 
