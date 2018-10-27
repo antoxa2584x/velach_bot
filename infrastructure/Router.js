@@ -1,10 +1,11 @@
 class Router {
-  constructor(routes = []) {
+  constructor(routes) {
     this.routes = routes;
   }
 
-  getMatchingRoutes(messageData) {
-    return this.routes.filter(route => route.isMatching(messageData));
+  routeMessage(messageData) {
+    const matchingRoutes = this.routes.filter(route => route.isMatching(messageData));
+    return Promise.all(matchingRoutes.map(route => route.processMessage(messageData)));
   }
 }
 

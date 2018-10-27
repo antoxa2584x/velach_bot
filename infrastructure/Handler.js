@@ -2,12 +2,11 @@ const { NotImplementedError } = require('./errors');
 
 
 class Handler {
-  constructor(messageData, bot) {
-    this.messageData = messageData;
+  constructor(bot) {
     this.bot = bot;
   }
 
-  async handle() { // eslint-disable-line
+  async handleMessage() { // eslint-disable-line
     throw new NotImplementedError();
   }
 }

@@ -2,14 +2,20 @@ const TelegramBot = require('node-telegram-bot-api');
 
 const settings = require('../settings');
 const TelegramMessageDTO = require('../dto/TelegramMessageDTO');
-const { MessageHandlingError } = require('../infrastructure/errors');
-const Router = require('../infrastructure/Router');
+const { MessageHandlingError } = require('./errors');
+const Router = require('./Router');
 
 
 class Application {
+  static get routes() {
+    return [];
+  }
+
   constructor() {
     this.bot = new TelegramBot(settings.get('telegram.token'));
-    this.router = new Router();
+
+    const routes = this.constructor.routes.map(RouteCls => new RouteCls(this.bot));
+    this.router = new Router(routes);
   }
 
   async start() {
@@ -34,9 +40,7 @@ class Application {
   }
 
   handleMessage(messageData) {
-    const routes = this.router.getMatchingRoutes(messageData);
-    const handlers = routes.map(route => route.getHandlerInstance(messageData, this.bot));
-    return Promise.all(handlers.map(handler => handler.handle()));
+    return this.router.routeMessage(messageData);
   }
 }
 

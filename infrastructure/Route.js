@@ -1,15 +1,32 @@
+import { NotImplementedError } from './errors';
+
+
 class Route {
-  constructor(matchRule, HandlerCls) {
-    this.matchRule = matchRule;
-    this.HandlerCls = HandlerCls;
+  static get middlewareClsList() {
+    return [];
   }
 
-  isMatching(messageData) {
-    return this.matchRule(messageData);
+  static get HandlerCls() {
+    return null;
   }
 
-  getHandlerInstance(messageData, bot) {
-    return new this.HandlerCls(messageData, bot);
+  constructor(bot) {
+    this.middlewares = this.constructor.MiddlewareClsList.map(Cls => new Cls(bot));
+    this.handler = new this.constructor.HandlerCls(bot);
+  }
+
+  isMatching(messageData) { // eslint-disable-line
+    throw new NotImplementedError();
+  }
+
+  async processMessage(messageData) { // eslint-disable-line
+    let processedMessageData = messageData;
+
+    for (const middleware of this.middlewares) { // eslint-disable-line
+      processedMessageData = await middleware.processMessage(processedMessageData); // eslint-disable-line
+    }
+
+    await this.handler.handleMessage(processedMessageData);
   }
 }
 
