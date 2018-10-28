@@ -1,4 +1,4 @@
-import { NotImplementedError } from './errors';
+const { NotImplementedError } = require('./errors');
 
 
 class Route {
@@ -11,7 +11,8 @@ class Route {
   }
 
   constructor(bot) {
-    this.middlewares = this.constructor.MiddlewareClsList.map(Cls => new Cls(bot));
+    this.bot = bot;
+    this.middlewares = this.constructor.middlewareClsList.map(Cls => new Cls(bot));
     this.handler = new this.constructor.HandlerCls(bot);
   }
 

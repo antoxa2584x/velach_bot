@@ -1,4 +1,4 @@
-import { NotImplementedError } from './errors';
+const { NotImplementedError } = require('./errors');
 
 class Middleware {
   constructor(bot) {

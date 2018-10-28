@@ -2,7 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 
 const settings = require('../settings');
 const TelegramMessageDTO = require('../dto/TelegramMessageDTO');
-const { MessageHandlingError } = require('./errors');
+// const { MessageHandlingError } = require('./errors');
 const Router = require('./Router');
 
 
@@ -35,7 +35,8 @@ class Application {
     try {
       await this.handleMessage(messageData);
     } catch (error) {
-      throw new MessageHandlingError();
+      console.error(error);
+      // throw new MessageHandlingError();
     }
   }
 
